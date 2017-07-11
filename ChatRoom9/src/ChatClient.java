@@ -1,4 +1,4 @@
-//发现发送第二条信息的时候就会报错，报错到DataOutputStream dos = new DataOutputStream(s.getOutputStream()); =》不能关掉，每次都要连接
+//之前版本发送第二条信息的时候就会报错
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -28,10 +28,9 @@ public class ChatClient extends Frame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				//系统退出的时候关闭s，和dos
-				disconnect();
+				disconnect();//系统关闭时，调用disconnect函数
 				System.exit(0);//传“0”，然后关闭
-			}
+			} //close the window 
 			
 		});
 	    tfTxt.addActionListener(new TFListener());
@@ -43,7 +42,7 @@ public class ChatClient extends Frame {
 	public void connect(){
 		try {
 			s = new Socket("127.0.0.1", 8888); //这里改成Socket s = new....就会有空指针错！
-            dos= new DataOutputStream(s.getOutputStream());
+            dos= new DataOutputStream(s.getOutputStream());  //保存好到时候直接用
 System.out.println("connected!");
 		} catch (UnknownHostException e) { //找不到主机
 			e.printStackTrace();
@@ -61,7 +60,7 @@ System.out.println("connected!");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}//V9新添，用于在软件关闭时清空软件
 	
 	
 	private class TFListener implements ActionListener {
